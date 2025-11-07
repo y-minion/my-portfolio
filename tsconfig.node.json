@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tsbuildinfo",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2020",
+    "skipLibCheck": true
+  },
+  "include": ["vite.config.ts"] // Vite 설정 파일 등을 포함합니다.
+}

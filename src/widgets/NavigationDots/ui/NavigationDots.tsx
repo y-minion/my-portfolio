@@ -61,8 +61,7 @@ export function NavigationDots() {
       }));
 
       // 현재 스크롤 위치 (뷰포트 상단 1/3 지점)
-      const scrollPosition =
-        window.scrollY + window.innerHeight / 3;
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
 
       // 하단부터 순회하며 현재 보고 있는 섹션 찾기
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -82,8 +81,7 @@ export function NavigationDots() {
     handleScroll(); // 초기 상태 설정
 
     // 클린업
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   /**
@@ -97,9 +95,7 @@ export function NavigationDots() {
       // 상단 오프셋 (-80px)을 적용하여 헤더와 겹치지 않도록 함
       const yOffset = -80;
       const y =
-        element.getBoundingClientRect().top +
-        window.pageYOffset +
-        yOffset;
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
@@ -130,23 +126,24 @@ export function NavigationDots() {
             />
 
             {/* 섹션 레이블 - 호버 시에만 표시 */}
-            <span
-              className={`text-sm whitespace-nowrap transition-all duration-300 overflow-hidden ${
-                isHovered
-                  ? "max-w-[120px] opacity-100 hover:text-[#0064FF]" // 호버 시: 펼침
-                  : "max-w-0 opacity-0" // 기본 상태: 숨김
-              } ${
-                activeSection === item.id
-                  ? "text-[#0064FF]" // 활성 섹션: 파란색 텍스트
-                  : "text-[#202632]" // 비활성 섹션: 검은색 텍스트
-              }`}
-              style={{
-                fontWeight:
-                  activeSection === item.id ? 600 : 500,
-              }}
-            >
-              {item.label}
-            </span>
+            {isHovered && (
+              <span
+                className={`text-sm whitespace-nowrap transition-all duration-300 overflow-hidden ${
+                  isHovered
+                    ? "max-w-[120px] opacity-100 hover:text-[#0064FF]" // 호버 시: 펼침
+                    : "max-w-0 opacity-0 w-0" // 기본 상태: 숨김
+                } ${
+                  activeSection === item.id
+                    ? "text-[#0064FF]" // 활성 섹션: 파란색 텍스트
+                    : "text-[#202632]" // 비활성 섹션: 검은색 텍스트
+                }`}
+                style={{
+                  fontWeight: activeSection === item.id ? 600 : 500,
+                }}
+              >
+                {item.label}
+              </span>
+            )}
           </button>
         ))}
       </div>
