@@ -104,7 +104,7 @@ export function NavigationDots() {
     <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block">
       {/* 네비게이터 컨테이너 - 호버 시 확장 */}
       <div
-        className={`flex flex-col gap-4 bg-white/80 backdrop-blur-sm rounded-full py-4 px-3 shadow-lg border border-gray-100 transition-all duration-300 hover:rounded-2xl hover:px-5
+        className={`flex flex-col gap-4 bg-white/80 backdrop-blur-sm rounded-full py-4 px-3 shadow-lg border border-gray-100 transition duration-300 delay-150 ease-in-out hover:rounded-2xl hover:px-5
         ${isHovered === false && "items-col"}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -118,7 +118,7 @@ export function NavigationDots() {
           >
             {/* 도트 인디케이터 */}
             <div
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 delay-50 ease-in-out flex-shrink-0 group-hover:bg-[#0064FF] group-hover:scale-110  ${
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 delay-150 ease-in-out flex-shrink-0 group-hover:bg-[#0064FF] group-hover:scale-125  ${
                 activeSection === item.id
                   ? "bg-[#0064FF] scale-125" // 활성 상태: 파란색 + 크기 증가
                   : "bg-gray-300" // 비활성 상태: 회색

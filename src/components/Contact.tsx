@@ -1,26 +1,26 @@
-import { Mail, Github, BookOpen } from 'lucide-react';
-import { useScrollAnimation } from './hooks/useScrollAnimation';
+import { Mail, Github, BookOpen } from "lucide-react";
+import { useScrollAnimation } from "./hooks/useScrollAnimation";
 
 export function Contact() {
   const { ref, isVisible } = useScrollAnimation();
-  
+
   return (
-    <section 
+    <section
       ref={ref as React.RefObject<HTMLElement>}
-      id="contact" 
+      id="contact"
       className="py-24 px-6 bg-white"
     >
-      <div 
+      <div
         className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-12'
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
         }`}
       >
-        <h2 className="text-[2rem] mb-8" style={{ fontWeight: 700 }}>Contact Me</h2>
-        
+        <h2 className="text-[2rem] mb-8" style={{ fontWeight: 700 }}>
+          Contact Me
+        </h2>
+
         <div className="mb-12">
-          <a 
+          <a
             href="mailto:dudals2963@tukorea.ac.kr"
             className="inline-flex items-center gap-3 text-xl text-[#0064FF] hover:underline"
           >
@@ -28,10 +28,10 @@ export function Contact() {
             <span>dudals2963@tukorea.ac.kr</span>
           </a>
         </div>
-        
+
         <div className="flex justify-center gap-6">
           <a
-            href="https://github.com"
+            href="https://github.com/y-minion"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-6 py-3 bg-[#F9FAFB] rounded-lg hover:bg-[#ececf0] transition-colors"
@@ -39,9 +39,9 @@ export function Contact() {
             <Github className="w-5 h-5" />
             <span style={{ fontWeight: 500 }}>GitHub</span>
           </a>
-          
+
           <a
-            href="https://velog.io"
+            href="https://velog.io/@y-minion/posts"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-6 py-3 bg-[#F9FAFB] rounded-lg hover:bg-[#ececf0] transition-colors"
