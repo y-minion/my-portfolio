@@ -18,18 +18,10 @@
 
 import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
 import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import carImage from "../../../../public/carProject_image.png";
 
-interface ProjectDetailCarRoofBoxProps {
-  /**
-   * 메인 페이지로 돌아가는 함수
-   */
-  onBack: () => void;
-}
-
-export function ProjectDetailCarRoofBox({
-  onBack,
-}: ProjectDetailCarRoofBoxProps) {
+export function ProjectDetailCarRoofBox() {
   /**
    * 프로젝트 사용 기술 태그 목록
    *
@@ -165,26 +157,26 @@ export function ProjectDetailCarRoofBox({
             <h3
               className="text-[#202632] leading-relaxed text-lg mb-4"
               style={{ fontWeight: 600 }}
-            >
-              {" "}
-              기술적 접근
-            </h3>
-            <p className="text-[#202632] leading-relaxed text-lg mb-4">
-              초기 가설은 루프 스포일러가 공기 흐름을 개선할 것이라 예상했으나,
-              CFD 시뮬레이션 결과 오히려 스포일러가 와류를 증가시키고 항력을
-              높이는 것으로 나타났습니다. 이에 스포일러를 제거하고 와류 발생기를
-              전략적으로 배치하여 공기 흐름을 제어하는 혁신적인 해결책을
-              제시했습니다.
-            </p>
+              >
+                {" "}
+                기술적 접근
+              </h3>
+              <p className="text-[#202632] leading-relaxed text-lg mb-4">
+                초기 가설은 루프 스포일러가 공기 흐름을 개선할 것이라 예상했으나,
+                CFD 시뮬레이션 결과 오히려 스포일러가 와류를 증가시키고 항력을
+                높이는 것으로 나타났습니다. 이에 스포일러를 제거하고 와류 발생기를
+                전략적으로 배치하여 공기 흐름을 제어하는 혁신적인 해결책을
+                제시했습니다.
+              </p>
+            </div>
           </div>
-        </div>
       </section>
 
       {/* Navigation */}
       <section className="py-16 px-6 border-t border-gray-200">
         <div className="max-w-4xl mx-auto">
-          <button
-            onClick={onBack}
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-[#0064FF] hover:text-[#0052CC] transition-colors group"
             style={{ fontWeight: 600 }}
           >
@@ -193,7 +185,7 @@ export function ProjectDetailCarRoofBox({
               className="group-hover:-translate-x-1 transition-transform"
             />
             Back to Main
-          </button>
+          </Link>
         </div>
       </section>
     </div>

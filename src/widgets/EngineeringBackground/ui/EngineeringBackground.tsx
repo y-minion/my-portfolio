@@ -15,20 +15,16 @@
  * - 프로젝트별 기술 태그 표시
  */
 
+import { useNavigate } from 'react-router-dom';
 import { useScrollAnimation } from '../../../shared/lib/hooks/useScrollAnimation';
 import { ImageWithFallback } from '../../../shared/components/ImageWithFallback';
+import { useScrollStore } from '../../../shared/model/useScrollStore';
 
-interface EngineeringBackgroundProps {
-  /**
-   * 프로젝트 클릭 시 호출되는 콜백 함수
-   * @param projectId - 클릭한 프로젝트의 ID
-   */
-  onProjectClick?: (projectId: string) => void;
-}
-
-export function EngineeringBackground({ onProjectClick }: EngineeringBackgroundProps) {
+export function EngineeringBackground() {
   // 스크롤 애니메이션 훅
   const { ref, isVisible } = useScrollAnimation();
+  const navigate = useNavigate();
+  const setLastViewedProjectId = useScrollStore((state) => state.setLastViewedProjectId);
 
   /**
    * 기계공학 프로젝트 데이터
@@ -101,15 +97,21 @@ export function EngineeringBackground({ onProjectClick }: EngineeringBackgroundP
           {projects.map((project, index) => {
             const isClickable = !!project.projectId;
             const handleClick = () => {
-              if (isClickable && onProjectClick && project.projectId) {
-                onProjectClick(project.projectId);
+              if (isClickable && project.projectId) {
+                navigate(`/project/${project.projectId}`);
               }
             };
 
             return (
               <div
                 key={index}
-                onClick={handleClick}
+                onClick={() => {
+                  if (isClickable && project.projectId) {
+                    setLastViewedProjectId(project.projectId);
+                    handleClick();
+                  }
+                }}
+                id={`project-${project.projectId}`} // 스크롤 위치 추적용 ID
                 className={`bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-500 ${
                   isVisible
                     ? 'opacity-100 translate-y-0'

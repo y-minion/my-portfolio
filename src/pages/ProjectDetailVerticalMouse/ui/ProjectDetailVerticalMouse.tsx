@@ -18,18 +18,10 @@
 
 import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
 import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import mouseImage from "../../../../public/mouseProject_image.png";
 
-interface ProjectDetailVerticalMouseProps {
-  /**
-   * 메인 페이지로 돌아가는 함수
-   */
-  onBack: () => void;
-}
-
-export function ProjectDetailVerticalMouse({
-  onBack,
-}: ProjectDetailVerticalMouseProps) {
+export function ProjectDetailVerticalMouse() {
   /**
    * 프로젝트 사용 기술 태그 목록
    *
@@ -160,8 +152,8 @@ export function ProjectDetailVerticalMouse({
       {/* Navigation */}
       <section className="py-16 px-6 border-t border-gray-200">
         <div className="max-w-4xl mx-auto">
-          <button
-            onClick={onBack}
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-[#0064FF] hover:text-[#0052CC] transition-colors group"
             style={{ fontWeight: 600 }}
           >
@@ -170,7 +162,7 @@ export function ProjectDetailVerticalMouse({
               className="group-hover:-translate-x-1 transition-transform"
             />
             Back to Main
-          </button>
+          </Link>
         </div>
       </section>
     </div>

@@ -20,14 +20,30 @@ import { EngineeringBackground } from '../../../widgets/EngineeringBackground/ui
 import { Projects } from '../../../widgets/Projects/ui/Projects';
 import { Experience } from '../../../widgets/Experience/ui/Experience';
 import { Contact } from '../../../widgets/Contact/ui/Contact';
+import { useEffect } from 'react';
+import { useScrollStore } from '../../../shared/model/useScrollStore';
 import { NavigationDots } from '../../../widgets/NavigationDots/ui/NavigationDots';
 
-interface HomePageProps {
-  /** 프로젝트 클릭 시 호출되는 콜백 함수 */
-  onProjectClick: (projectId: string) => void;
-}
+export function HomePage() {
+  const lastViewedProjectId = useScrollStore((state) => state.lastViewedProjectId);
+  const setLastViewedProjectId = useScrollStore((state) => state.setLastViewedProjectId);
 
-export function HomePage({ onProjectClick }: HomePageProps) {
+  useEffect(() => {
+    if (lastViewedProjectId) {
+      // 약간의 지연을 주어 페이지 렌더링이 완료된 후 스크롤
+      const timer = setTimeout(() => {
+        const element = document.getElementById(`project-${lastViewedProjectId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // 스크롤 후 ID 초기화 (일회성 동작)
+          setLastViewedProjectId(null);
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [lastViewedProjectId, setLastViewedProjectId]);
+
   return (
     <>
       {/* 우측 네비게이션 도트 */}
@@ -38,8 +54,8 @@ export function HomePage({ onProjectClick }: HomePageProps) {
         <Hero />
         <About />
         <Skills />
-        <EngineeringBackground onProjectClick={onProjectClick} />
-        <Projects onProjectClick={onProjectClick} />
+        <EngineeringBackground />
+        <Projects />
         <Experience />
         <Contact />
       </main>

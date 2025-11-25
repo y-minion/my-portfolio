@@ -16,16 +16,15 @@
  */
 
 import { ExternalLink } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useScrollAnimation } from '../../../shared/lib/hooks/useScrollAnimation';
+import { useScrollStore } from '../../../shared/model/useScrollStore';
 
-interface ProjectsProps {
-  /** 프로젝트 클릭 시 호출되는 콜백 함수 */
-  onProjectClick?: (projectId: string) => void;
-}
-
-export function Projects({ onProjectClick }: ProjectsProps) {
+export function Projects() {
   // 스크롤 애니메이션 훅
   const { ref, isVisible } = useScrollAnimation();
+  const navigate = useNavigate();
+  const setLastViewedProjectId = useScrollStore((state) => state.setLastViewedProjectId);
   
   /**
    * 프로젝트 데이터
@@ -124,7 +123,10 @@ export function Projects({ onProjectClick }: ProjectsProps) {
               {/* 자세히 보기 버튼 또는 준비 중 메시지 */}
               {project.hasDetailPage ? (
                 <button 
-                  onClick={() => onProjectClick?.(project.id)}
+                  onClick={() => {
+                    setLastViewedProjectId(project.id);
+                    navigate(`/project/${project.id}`);
+                  }}
                   className="inline-flex items-center gap-2 text-[#0064FF] hover:gap-3 transition-all cursor-pointer"
                 >
                   <span style={{ fontWeight: 500 }}>자세히 보기</span>

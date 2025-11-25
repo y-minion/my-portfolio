@@ -20,7 +20,8 @@
  * - lastViewedProjectId: 마지막으로 본 프로젝트의 ID (스크롤 복원용)
  */
 
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/ui/HomePage';
 import { ProjectDetailVerticalMouse } from './pages/ProjectDetailVerticalMouse/ui/ProjectDetailVerticalMouse';
 import { ProjectDetailCarRoofBox } from './pages/ProjectDetailCarRoofBox/ui/ProjectDetailCarRoofBox';
@@ -31,108 +32,42 @@ import { ProjectDetailCollaborationTool } from './components/ProjectDetailCollab
 import { ProjectDetailMiniReact } from './components/ProjectDetailMiniReact';
 
 /**
- * ViewType
+ * ScrollToTop
  * 
- * 애플리케이션의 가능한 뷰 타입을 정의합니다.
- * - 'home': 메인 페이지
- * - 'vertical-mouse': 버티컬 마우스 구조 해석 프로젝트 상세 페이지
- * - 'car-roof-box': 자동차 툴레 후류 현상 분석 프로젝트 상세 페이지
- * - 'automation-machine': 자동화 소분 기계 프로젝트 상세 페이지
- * - 'galaxy-z-flip': GALAXY Z FLIP 1 개선 설계 프로젝트 상세 페이지
- * - 'web-creator-x': Web-Creator-X 프로젝트 상세 페이지
- * - 'collaboration-tool': 협업 도구 프로젝트 상세 페이지
- * - 'mini-react': Mini React 프로젝트 상세 페이지
+ * 페이지 이동 시 스크롤을 최상단으로 이동시키는 컴포넌트
+ * 뒤로가기(POP) 동작 시에는 스크롤 위치를 유지합니다.
  */
-type ViewType = 'home' | 'vertical-mouse' | 'car-roof-box' | 'automation-machine' | 'galaxy-z-flip' | 'web-creator-x' | 'collaboration-tool' | 'mini-react';
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  const navType = useNavigationType();
+
+  useEffect(() => {
+    if (navType !== "POP") {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, navType]);
+
+  return null;
+}
 
 export default function App() {
-  // 현재 표시 중인 뷰
-  const [currentView, setCurrentView] = useState<ViewType>('home');
-  // 마지막으로 본 프로젝트 ID (스크롤 위치 복원용)
-  const [lastViewedProjectId, setLastViewedProjectId] = useState<string | null>(null);
-
-  /**
-   * 페이지 최상단으로 스크롤
-   */
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  /**
-   * 특정 프로젝트 카드로 스크롤
-   * 
-   * @param {string} projectId - 스크롤할 프로젝트의 ID
-   */
-  const scrollToProject = (projectId: string) => {
-    // DOM 렌더링 후 스크롤하도록 약간의 지연 적용
-    setTimeout(() => {
-      const element = document.getElementById(`project-${projectId}`);
-      if (element) {
-        const yOffset = -100; // 상단 여백
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    }, 100);
-  };
-
-  /**
-   * 프로젝트 클릭 핸들러
-   * 
-   * 프로젝트 상세 페이지로 이동하고 프로젝트 ID를 저장합니다.
-   * 
-   * @param {string} projectId - 클릭한 프로젝트의 ID
-   */
-  const handleProjectClick = (projectId: string) => {
-    setLastViewedProjectId(projectId);
-    setCurrentView(projectId as ViewType);
-    scrollToTop();
-  };
-
-  /**
-   * 메인 페이지로 돌아가기 핸들러
-   * 
-   * 메인 페이지로 돌아가면서, 이전에 본 프로젝트가 있다면
-   * 해당 프로젝트 위치로 스크롤합니다.
-   */
-  const handleBackToHome = () => {
-    setCurrentView('home');
-    if (lastViewedProjectId) {
-      scrollToProject(lastViewedProjectId);
-    } else {
-      scrollToTop();
-    }
-  };
-
-  // 프로젝트 상세 페이지 라우팅 - Engineering Background
-  if (currentView === 'vertical-mouse') {
-    return <ProjectDetailVerticalMouse onBack={handleBackToHome} />;
-  }
-
-  if (currentView === 'car-roof-box') {
-    return <ProjectDetailCarRoofBox onBack={handleBackToHome} />;
-  }
-
-  if (currentView === 'automation-machine') {
-    return <ProjectDetailAutomationMachine onBack={handleBackToHome} />;
-  }
-
-  if (currentView === 'galaxy-z-flip') {
-    return <ProjectDetailGalaxyZFlip onBack={handleBackToHome} />;
-  }
-
-  // 프로젝트 상세 페이지 라우팅 - Software Projects
-  if (currentView === 'web-creator-x') {
-    return <ProjectDetailWebCreatorX onBack={handleBackToHome} />;
-  }
-
-  if (currentView === 'collaboration-tool') {
-    return <ProjectDetailCollaborationTool onBack={handleBackToHome} />;
-  }
-
-  if (currentView === 'mini-react') {
-    return <ProjectDetailMiniReact onBack={handleBackToHome} />;
-  }
-
-  // 메인 페이지
-  return <HomePage onProjectClick={handleProjectClick} />;
+  return (
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Engineering Background Projects */}
+        <Route path="/project/vertical-mouse" element={<ProjectDetailVerticalMouse />} />
+        <Route path="/project/car-roof-box" element={<ProjectDetailCarRoofBox />} />
+        <Route path="/project/automation-machine" element={<ProjectDetailAutomationMachine />} />
+        <Route path="/project/galaxy-z-flip" element={<ProjectDetailGalaxyZFlip />} />
+        
+        {/* Software Projects */}
+        <Route path="/project/web-creator-x" element={<ProjectDetailWebCreatorX />} />
+        <Route path="/project/collaboration-tool" element={<ProjectDetailCollaborationTool />} />
+        <Route path="/project/mini-react" element={<ProjectDetailMiniReact />} />
+      </Routes>
+    </>
+  );
 }

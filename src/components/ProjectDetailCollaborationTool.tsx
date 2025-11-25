@@ -16,17 +16,11 @@
  */
 
 import { ArrowLeft, CheckCircle2, Zap, Database, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useScrollAnimation } from "../shared/lib/hooks/useScrollAnimation";
 import alertImage from "../../public/alert_modal_image.png";
 
-interface ProjectDetailCollaborationToolProps {
-  /** 메인 페이지로 돌아가는 콜백 함수 */
-  onBack: () => void;
-}
-
-export function ProjectDetailCollaborationTool({
-  onBack,
-}: ProjectDetailCollaborationToolProps) {
+export function ProjectDetailCollaborationTool() {
   const section1 = useScrollAnimation();
   const section2 = useScrollAnimation();
   const section3 = useScrollAnimation();
@@ -36,13 +30,13 @@ export function ProjectDetailCollaborationTool({
       {/* Hero Section */}
       <section className="py-24 px-6 bg-gradient-to-br from-purple-50 to-pink-50">
         <div className="max-w-5xl mx-auto">
-          <button
-            onClick={onBack}
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-[#0064FF] mb-8 hover:gap-3 transition-all"
           >
             <ArrowLeft className="w-5 h-5" />
             <span style={{ fontWeight: 500 }}>모든 프로젝트로 돌아가기</span>
-          </button>
+          </Link>
 
           <h1 className="text-[3rem] mb-4" style={{ fontWeight: 700 }}>
             Project: 협업 도구 서비스
@@ -337,14 +331,14 @@ const useFilterStore = create(
               : "opacity-0 translate-y-12"
           }`}
         >
-          <button
-            onClick={onBack}
+          <Link
+            to="/"
             className="inline-flex items-center gap-3 px-8 py-4 bg-[#0064FF] text-white rounded-xl hover:bg-[#0052CC] transition-colors"
             style={{ fontWeight: 600 }}
           >
             <ArrowLeft className="w-5 h-5" />
             <span>모든 프로젝트로 돌아가기</span>
-          </button>
+          </Link>
         </div>
       </section>
     </div>
